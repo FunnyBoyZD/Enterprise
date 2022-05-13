@@ -1,17 +1,16 @@
 #define _CRT_SECURE_NO_WARNINGS 
-#include "stdlib.h" 
-#include "stdio.h" 
-#include "conio.h" 
-#include "math.h" 
-#include "locale.h" 
 #include "string.h" 
-#include "windows.h" 
 #include <iostream>
 #include <vector>
 #include "Department.h"
 #define DEBUG
 using namespace std;
 
+/*
+Конструктор без параметрів
+Вхід: відсутній
+Вихід: відсутній
+*/
 Department::Department()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -20,6 +19,15 @@ Department::Department()
 	_name = "Невідомо";
 }
 
+/*
+Конструктор з параметрами
+Вхід:
+	workersAA - посилання на помічників адміністратора
+	workersBA - посилання на бізнес-аналітиків
+	workersMS - посилання на спеціалістів з маркетингу
+	name - назва відділу
+Вихід: відсутній
+*/
 Department::Department(vector<AdministrativeAssistant>& workersAA, vector<BusinessAnalyst>& workersBA, vector<MarketingSpecialist>& workersMS, string name)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -40,6 +48,12 @@ Department::Department(vector<AdministrativeAssistant>& workersAA, vector<Busine
 	_name = name;
 }
 
+/*
+Конструктор копіювання
+Вхід:
+	other - константне посилання на об'єкт класу Department
+Вихід: відсутній
+*/
 Department::Department(const Department& other)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -60,6 +74,11 @@ Department::Department(const Department& other)
 	_name = other._name;
 }
 
+/*
+Деструктор класу
+Вхід: відсутній
+Вихід: відсутній
+*/
 Department::~Department()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
@@ -67,51 +86,75 @@ Department::~Department()
 #endif 
 }
 
+/*
+Геттер для назви відділу
+Вхід: відсутній
+Вихід:
+	GetName = newName - назва відділу
+*/
 string Department::GetName()
 {
 	string newName = _name;
 	return newName;
 }
 
+/*
+Геттер для помічників адміністратора
+Вхід: відсутній
+Вихід:
+	GetWorkersAA = vAA - помічники адміністратора
+*/
 vector<AdministrativeAssistant> Department::GetWorkersAA()
 {
 	vector<AdministrativeAssistant> vAA;
-	AdministrativeAssistant firstAA;
-	vAA.push_back(firstAA);
-	vAA[vAA.size() - 1].Set(_workersAA[0].GetName(), _workersAA[0].GetAge(), _workersAA[0].GetExperience(), _workersAA[0].GetPayment(), _workersAA[0].GetWorkingPlace());
-	for (auto item = _workersAA.begin() + 1; item != _workersAA.end(); item++)
+	for (auto item = _workersAA.begin(); item != _workersAA.end(); item++)
 	{
 		vAA.emplace_back(*item);
 	}
 	return vAA;
 }
 
+/*
+Геттер для бізнес-аналітиків
+Вхід: відсутній
+Вихід:
+	GetWorkersBA = vBA - бізнес-аналітики
+*/
 vector<BusinessAnalyst> Department::GetWorkersBA()
 {
 	vector<BusinessAnalyst> vBA;
-	BusinessAnalyst firstBA;
-	vBA.push_back(firstBA);
-	vBA[vBA.size() - 1].Set(_workersBA[0].GetName(), _workersBA[0].GetAge(), _workersBA[0].GetExperience(), _workersBA[0].GetPayment(), _workersBA[0].GetWorkingPlace());
-	for (auto item = _workersBA.begin() + 1; item != _workersBA.end(); item++)
+	for (auto item = _workersBA.begin(); item != _workersBA.end(); item++)
 	{
 		vBA.emplace_back(*item);
 	}
 	return vBA;
 }
 
+/*
+Геттер для спеціалістів з маркетингу
+Вхід: відсутній
+Вихід:
+	GetWorkersMS = vMS - спеціалісти з маркетингу
+*/
 vector<MarketingSpecialist> Department::GetWorkersMS()
 {
 	vector<MarketingSpecialist> vMS;
-	MarketingSpecialist firstMS;
-	vMS.push_back(firstMS);
-	vMS[vMS.size() - 1].Set(_workersMS[0].GetName(), _workersMS[0].GetAge(), _workersMS[0].GetExperience(), _workersMS[0].GetPayment(), _workersMS[0].GetWorkingPlace());
-	for (auto item = _workersMS.begin() + 1; item != _workersMS.end(); item++)
+	for (auto item = _workersMS.begin(); item != _workersMS.end(); item++)
 	{
 		vMS.emplace_back(*item);
 	}
 	return vMS;
 }
 
+/*
+Сеттер для всіх полів об'єкту класу
+Вхід:
+	workersAA - помічники адміністратора
+	workersBA - бізнес-аналітики
+	workersMS - спеціалісти з маркетингу
+	name - назва відділу
+Вихід: відсутній
+*/
 void Department::Set(vector<AdministrativeAssistant> workersAA, vector<BusinessAnalyst> workersBA, vector<MarketingSpecialist> workersMS, string name)
 {
 	for (auto item = workersAA.begin(); item != workersAA.end(); item++)
@@ -129,6 +172,12 @@ void Department::Set(vector<AdministrativeAssistant> workersAA, vector<BusinessA
 	_name = name;
 }
 
+/*
+Сеттер для помічників адміністратора
+Вхід:
+	workersAA - помічники адміністратора
+Вихід: відсутній
+*/
 void Department::SetWorkersAA(vector<AdministrativeAssistant> workersAA)
 {
 	_workersAA.empty();
@@ -138,6 +187,12 @@ void Department::SetWorkersAA(vector<AdministrativeAssistant> workersAA)
 	}
 }
 
+/*
+Сеттер для бізнес-аналітиків
+Вхід:
+	workersBA - бізнес-аналітики
+Вихід: відсутній
+*/
 void Department::SetWorkersBA(vector<BusinessAnalyst> workersBA)
 {
 	_workersBA.empty();
@@ -147,6 +202,12 @@ void Department::SetWorkersBA(vector<BusinessAnalyst> workersBA)
 	}
 }
 
+/*
+Сеттер для спеціалістів з маркетингу
+Вхід:
+	workersMS - спеціалісти з маркетингу
+Вихід: відсутній
+*/
 void Department::SetWorkersMS(vector<MarketingSpecialist> workersMS)
 {
 	_workersMS.empty();
@@ -156,26 +217,55 @@ void Department::SetWorkersMS(vector<MarketingSpecialist> workersMS)
 	}
 }
 
+/*
+Сеттер для назви відділу
+Вхід:
+	name - назва відділу
+Вихід: відсутній
+*/
 void Department::SetName(string name)
 {
 	_name = name;
 }
 
+/*
+Метод додавання нового помічника адміністратора
+Вхід:
+	newWorker - новий помічник адміністратора
+Вихід: відсутній
+*/
 void Department::InsertAnAA(const AdministrativeAssistant* newWorker)
 {
 	_workersAA.push_back(*newWorker);
 }
 
+/*
+Метод додавання нового бізнес-аналітика
+Вхід:
+	newWorker - новий бізнес-аналітик
+Вихід: відсутній
+*/
 void Department::InsertABA(const BusinessAnalyst* newWorker)
 {
 	_workersBA.push_back(*newWorker);
 }
 
+/*
+Метод додавання нового спеціалісту з маркетингу
+Вхід:
+	newWorker - новий спеціаліст з маркетингу
+Вихід: відсутній
+*/
 void Department::InsertAMS(const MarketingSpecialist* newWorker)
 {
 	_workersMS.push_back(*newWorker);
 }
 
+/*
+Метод виводу інформації про відділ
+Вхід: відсутній
+Вихід: відсутній
+*/
 void Department::Show()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
