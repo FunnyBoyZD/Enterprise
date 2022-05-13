@@ -1,16 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS 
-#include "stdlib.h" 
-#include "stdio.h" 
-#include "conio.h" 
-#include "math.h" 
-#include "locale.h" 
-#include "string.h" 
-#include "windows.h" 
-#include <iostream>
 #include "Professions.h"
 #define DEBUG 
 using namespace std;
 
+/*
+Функція виводу до консолі інформації про помічника адміністратора
+Вхід: відсутній
+Вихід: відсутній
+*/
 void AdministrativeAssistant::Show()
 {
 	cout << "\nІм'я: " << _name << endl;
@@ -28,6 +25,11 @@ void AdministrativeAssistant::Show()
 	}
 }
 
+/*
+Функція виводу до консолі інформації про бізнес-аналітика
+Вхід: відсутній
+Вихід: відсутній
+*/
 void BusinessAnalyst::Show()
 {
 	cout << "\nІм'я: " << _name << endl;
@@ -45,6 +47,11 @@ void BusinessAnalyst::Show()
 	}
 }
 
+/*
+Функція виводу до консолі інформації про спеціаліста з маркетингу
+Вхід: відсутній
+Вихід: відсутній
+*/
 void MarketingSpecialist::Show()
 {
 	cout << "\nІм'я: " << _name << endl;
