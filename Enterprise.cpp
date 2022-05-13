@@ -1,17 +1,16 @@
 #define _CRT_SECURE_NO_WARNINGS 
-#include "stdlib.h" 
-#include "stdio.h" 
-#include "conio.h" 
-#include "math.h" 
-#include "locale.h" 
 #include "string.h" 
-#include "windows.h" 
 #include <iostream>
 #include <vector>
 #include "Enterprise.h"
 #define DEBUG
 using namespace std;
 
+/*
+Конструктор без параметрів
+Вхід: відсутній
+Вихід: відсутній
+*/
 Enterprise::Enterprise()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -21,7 +20,17 @@ Enterprise::Enterprise()
 	_proceeds = 0;
 }
 
-Enterprise::Enterprise(vector<Department> items, Date* createdAt, string name, string owner, double proceeds)
+/*
+Конструктор з параметрами
+Вхід:
+	items - відділи корпорації
+	createdAt - дата заснування
+	name - назва корпорації
+	chiefExecutiveOfficer - CEO корпорації
+	proceeds - прибуток корпорації
+Вихід: відсутній
+*/
+Enterprise::Enterprise(vector<Department> items, Date* createdAt, string name, string chiefExecutiveOfficer, double proceeds)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор з параметрами класу Enterprice - " << this << endl << endl;
@@ -40,10 +49,16 @@ Enterprise::Enterprise(vector<Department> items, Date* createdAt, string name, s
 	}
 	_createdAt = createdAt;
 	_name += name;
-	_chiefExecutiveOfficer += owner;
+	_chiefExecutiveOfficer += chiefExecutiveOfficer;
 	_proceeds = proceeds;
 }
 
+/*
+Конструктор копіювання
+Вхід:
+	other - константне посилання на об'єкт класу Enterprise
+Вихід: відсутній
+*/
 Enterprise::Enterprise(const Enterprise& other)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -63,6 +78,12 @@ Enterprise::Enterprise(const Enterprise& other)
 	_proceeds = other._proceeds;
 }
 
+/*
+Геттер для відділів корпорації
+Вхід: відсутній
+Вихід:
+	GetItems = items - відділи корпорації
+*/
 vector<Department> Enterprise::GetItems()
 {
 	vector<Department> items;
@@ -73,6 +94,12 @@ vector<Department> Enterprise::GetItems()
 	return items;
 }
 
+/*
+Геттер для дати заснування корпорації
+Вхід: відсутній
+Вихід:
+	GetCreationDate = creationDate - дата заснування корпорації
+*/
 string Enterprise::GetCreationDate()
 {
 	string day = "";
@@ -94,22 +121,50 @@ string Enterprise::GetCreationDate()
 	return creationDate;
 }
 
+/*
+Геттер для назви корпорації
+Вхід: відсутній
+Вихід:
+	GetName = _name - назва корпорації
+*/
 string Enterprise::GetName()
 {
 	return _name;
 }
 
+/*
+Геттер для СЕО корпорації
+Вхід: відсутній
+Вихід:
+	GetCEO = _chiefExecutiveOfficer - СЕО корпорації
+*/
 string Enterprise::GetCEO()
 {
 	return _chiefExecutiveOfficer;
 }
 
+/*
+Геттер для прибутку корпорації
+Вхід: відсутній
+Вихід:
+	GetProceeds = _proceeds - прибуток корпорації
+*/
 double Enterprise::GetProceeds()
 {
 	return _proceeds;
 }
 
-void Enterprise::Set(vector<Department> items, Date* createdAt, string name, string owner, double proceeds)
+/*
+Сеттер для всіх полів об'єкту класу
+Вхід:
+	items - відділи корпорації
+	createdAt - дата заснування корпорації
+	name - назва корпорації
+	chiefExecutiveOfficer - СЕО корпорації
+	proceeds - прибуток корпорації
+Вихід: відсутній
+*/
+void Enterprise::Set(vector<Department> items, Date* createdAt, string name, string chiefExecutiveOfficer, double proceeds)
 {
 	if (&items == NULL)
 	{
@@ -125,10 +180,16 @@ void Enterprise::Set(vector<Department> items, Date* createdAt, string name, str
 	}
 	_createdAt = createdAt;
 	_name = name;
-	_chiefExecutiveOfficer = _chiefExecutiveOfficer + owner;
+	_chiefExecutiveOfficer = chiefExecutiveOfficer;
 	_proceeds = proceeds;
 }
 
+/*
+Сеттер для відділів корпорації
+Вхід:
+	items - посилання на відділи корпорації
+Вихід: відсутній
+*/
 void Enterprise::SetItems(vector<Department>& items)
 {
 	if (&items == NULL)
@@ -141,6 +202,12 @@ void Enterprise::SetItems(vector<Department>& items)
 	}
 }
 
+/*
+Сеттер для дати заснування корпорації
+Вхід:
+	createdAt - дата заснування корпорації
+Вихід: відсутній
+*/
 void Enterprise::SetCreationDate(Date& createdAt)
 {
 	if (&createdAt == NULL)
@@ -150,21 +217,45 @@ void Enterprise::SetCreationDate(Date& createdAt)
 	_createdAt = &createdAt;
 }
 
+/*
+Сеттер для назви корпорації
+Вхід:
+	name - назва корпорації
+Вихід: відсутній
+*/
 void Enterprise::SetName(string name)
 {
 	_name = name;
 }
 
+/*
+Сеттер для СЕО корпорації
+Вхід:
+	chiefExecutiveOfficer - СЕО корпорації
+Вихід: відсутній
+*/
 void Enterprise::SetCEO(string chiefExecutiveOfficer)
 {
 	_chiefExecutiveOfficer = chiefExecutiveOfficer;
 }
 
+/*
+Сеттер для прибутку корпорації
+Вхід:
+	proceeds - прибуток корпорації
+Вихід: відсутній
+*/
 void Enterprise::SetProceeds(double proceeds)
 {
 	_proceeds = proceeds;
 }
 
+/*
+Метод для додавання нового відділу корпорації
+Вхід:
+	newDepartment - константна адреса нового відділу
+Вихід: відсутній
+*/
 void Enterprise::Insert(const Department* newDepartment)
 {
 	if (newDepartment == NULL)
@@ -174,6 +265,11 @@ void Enterprise::Insert(const Department* newDepartment)
 	_items.push_back(*newDepartment);
 }
 
+/*
+Функція виводу до консолі інформації про корпорацію
+Вхід: відсутній
+Вихід: відсутній
+*/
 void Enterprise::Show()
 {
 	if (_createdAt->GetDay() < 10)
@@ -195,9 +291,14 @@ void Enterprise::Show()
 	}
 }
 
+/*
+Деструктор класу
+Вхід: відсутній
+Вихід: відсутній
+*/
 Enterprise::~Enterprise()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
-	printf("Викликався деструктор класу Enterprice - %p\n\n ", this);
+	cout << "Викликався деструктор класу Enterprice - " << this << endl << endl;
 #endif 
 }
