@@ -1,16 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS 
-#include "stdlib.h" 
-#include "stdio.h" 
-#include "conio.h" 
-#include "math.h" 
-#include "locale.h" 
 #include "string.h" 
-#include "windows.h" 
 #include <iostream>
 #include "Date.h" 
 #define DEBUG
 using namespace std;
 
+/*
+Конструктор без параметрів
+Вхід: відсутній
+Вихід: відсутній
+*/
 Date::Date()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
@@ -21,6 +20,14 @@ Date::Date()
 	_day = 0;
 }
 
+/*
+Конструктор з параметрами
+Вхід:
+	year - рік заснування
+	month - місяць заснування
+	day - день заснування
+Вихід: відсутній
+*/
 Date::Date(string year, string month, const int day)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до рядку #endif та після нього
@@ -34,6 +41,12 @@ Date::Date(string year, string month, const int day)
 		_day = day;
 }
 
+/*
+Конструктор копіювання
+Вхід:
+	other - константне посилання на об'єкт класу Date
+Вихід: відсутній
+*/
 Date::Date(const Date& other)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
@@ -44,23 +57,49 @@ Date::Date(const Date& other)
 	_day = other._day;
 }
 
+/*
+Геттер для року заснування
+Вхід: відсутній
+Вихід:
+	GetYear = newYear - рік заснування
+*/
 string Date::GetYear()
 {
 	string newYear = _year;
 	return newYear;
 }
 
+/*
+Геттер для місяця заснування
+Вхід: відсутній
+Вихід:
+	GetMonth = newMonth - місяць заснування
+*/
 string Date::GetMonth()
 {
 	string newMonth = _month;
 	return newMonth;
 }
 
+/*
+Геттер для дня заснування
+Вхід: відсутній
+Вихід:
+	GetDay = _day - день заснування
+*/
 int Date::GetDay()
 {
 	return _day;
 }
 
+/*
+Сеттер для всіх полів об'єкту класу
+Вхід:
+	year - рік заснування
+	month - місяць заснування
+	day - день заснування
+Вихід: відсутній
+*/
 void Date::Set(string year, string month, const int day)
 {
 	_year = year;
@@ -71,16 +110,34 @@ void Date::Set(string year, string month, const int day)
 		_day = day;
 }
 
+/*
+Сеттер для року заснування
+Вхід:
+	year - рік заснування
+Вихід: відсутній
+*/
 void Date::SetYear(string year)
 {
 	_year = year;
 }
 
+/*
+Сеттер для місяця заснування
+Вхід:
+	month - місяць заснування
+Вихід: відсутній
+*/
 void Date::SetMonth(string month)
 {
 	_month = month;
 }
 
+/*
+Сеттер для дня заснування
+Вхід:
+	day - день заснування
+Вихід: відсутній
+*/
 void Date::SetDay(const int day)
 {
 	if (day < 0 || day > 30)
@@ -89,6 +146,11 @@ void Date::SetDay(const int day)
 		_day = day;
 }
 
+/*
+Метод виводу даних про дату заснування до консолі
+Вхід: відсутній
+Вихід: відсутній
+*/
 void Date::Show()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
@@ -98,6 +160,11 @@ void Date::Show()
 #endif 
 }
 
+/*
+Деструктор класу
+Вхід: відсутній
+Вихід: відсутній
+*/
 Date::~Date()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
