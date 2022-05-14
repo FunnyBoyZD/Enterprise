@@ -206,6 +206,10 @@ void Department::SetName(string name)
 */
 void Department::InsertAnAA(const AdministrativeAssistant* newWorker)
 {
+	if (newWorker == NULL)
+	{
+		throw(exception("Ви не передали нового робітника!"));
+	}
 	_workersAA.push_back(*newWorker);
 }
 
@@ -217,6 +221,10 @@ void Department::InsertAnAA(const AdministrativeAssistant* newWorker)
 */
 void Department::InsertABA(const BusinessAnalyst* newWorker)
 {
+	if (newWorker == NULL)
+	{
+		throw(exception("Ви не передали нового робітника!"));
+	}
 	_workersBA.push_back(*newWorker);
 }
 
@@ -228,6 +236,10 @@ void Department::InsertABA(const BusinessAnalyst* newWorker)
 */
 void Department::InsertAMS(const MarketingSpecialist* newWorker)
 {
+	if (newWorker == NULL)
+	{
+		throw(exception("Ви не передали нового робітника!"));
+	}
 	_workersMS.push_back(*newWorker);
 }
 
