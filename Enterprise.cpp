@@ -75,6 +75,17 @@ Department* Enterprise::GetDepartment(int numOfDep)
 }
 
 /*
+Геттер для отримання кількості відділів корпорації
+Вхід: відсутній
+Вихід:
+	GetNumberOfDepartments = _items.size() - кількість відділів
+*/
+int Enterprise::GetNumberOfDepartments()
+{
+	return _items.size();
+}
+
+/*
 Геттер для відділів корпорації
 Вхід: відсутній
 Вихід:
