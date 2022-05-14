@@ -147,7 +147,7 @@ void Department::Set(vector<AdministrativeAssistant> workersAA, vector<BusinessA
 */
 void Department::SetWorkersAA(vector<AdministrativeAssistant> workersAA)
 {
-	_workersAA.empty();
+	_workersAA.clear();
 	for (auto item = workersAA.begin(); item != workersAA.end(); item++)
 	{
 		_workersAA.emplace_back(*item);
@@ -162,7 +162,7 @@ void Department::SetWorkersAA(vector<AdministrativeAssistant> workersAA)
 */
 void Department::SetWorkersBA(vector<BusinessAnalyst> workersBA)
 {
-	_workersBA.empty();
+	_workersBA.clear();
 	for (auto item = workersBA.begin(); item != workersBA.end(); item++)
 	{
 		_workersBA.emplace_back(*item);
@@ -177,7 +177,7 @@ void Department::SetWorkersBA(vector<BusinessAnalyst> workersBA)
 */
 void Department::SetWorkersMS(vector<MarketingSpecialist> workersMS)
 {
-	_workersMS.empty();
+	_workersMS.clear();
 	for (auto item = workersMS.begin(); item != workersMS.end(); item++)
 	{
 		_workersMS.emplace_back(*item);
