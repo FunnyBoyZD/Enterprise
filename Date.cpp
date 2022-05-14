@@ -2,7 +2,7 @@
 #include "string.h" 
 #include <iostream>
 #include "Date.h" 
-#define DEBUG
+//#define DEBUG
 using namespace std;
 
 /*
@@ -15,9 +15,7 @@ Date::Date()
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор без параметрів класу Date - " << this << endl << endl;
 #endif 
-	_year = "Невідомо";
-	_month = "Невідомо";
-	_day = 0;
+	Set("Невідомо", "Невідомо", 0);
 }
 
 /*
@@ -33,12 +31,7 @@ Date::Date(string year, string month, const int day)
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до рядку #endif та після нього
 	cout << "Викликався конструктор з параметрами класу Date - " << this << endl << endl;
 #endif 
-	_year = year;
-	_month = month;
-	if (day < 0 || day > 30)
-		throw(exception("Ви передали некоректне значення дня!"));
-	else
-		_day = day;
+	Set(year, month, day);
 }
 
 /*
@@ -52,9 +45,7 @@ Date::Date(const Date& other)
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
 	cout << "Викликався конструктор копіювання класу Date - " << this << endl << endl;
 #endif 
-	_year = other._year;
-	_month = other._month;
-	_day = other._day;
+	Set(other._year, other._month, other._day);
 }
 
 /*
@@ -102,12 +93,9 @@ int Date::GetDay()
 */
 void Date::Set(string year, string month, const int day)
 {
-	_year = year;
-	_month = month;
-	if (day < 0 || day > 30)
-		throw(exception("Ви передали некоректне значення дня!"));
-	else
-		_day = day;
+	SetYear(year);
+	SetMonth(month);
+	SetDay(day);
 }
 
 /*
