@@ -186,12 +186,9 @@ void Enterprise::Set(vector<Department> items, Date& createdAt, string name, str
 	items - посилання на відділи корпорації
 Вихід: відсутній
 */
-void Enterprise::SetItems(vector<Department>& items)
+void Enterprise::SetItems(vector<Department> items)
 {
-	if (&items == NULL)
-	{
-		throw("Ви не передали відділи для задання!");
-	}
+	items.at(0);
 	for (auto item = items.begin(); item != items.end(); item++)
 	{
 		_items.emplace_back(*item);
