@@ -13,6 +13,7 @@ public: //компоненти класу, до яких наданий публ
 	Enterprise& operator=(Enterprise&&) = delete; //заборона переміщення за допомогою оператора присвоювання
 	Enterprise& operator=(const Enterprise&) = default; //копіювання за допомогою оператора присвоювання за замовчуванням
 	Department* GetDepartment(int numOfDep); //геттер адреси конкретного відділу
+	int GetNumberOfDepartments(); //геттер для отримання кількості відділів корпорації
 	vector<Department> GetItems(); //геттер для відділів
 	string GetCreationDate(); //геттер для дати створення
 	string GetName(); //геттер для імені
