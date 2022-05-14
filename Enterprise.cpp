@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Enterprise.h"
-#define DEBUG
+//#define DEBUG
 using namespace std;
 
 /*
@@ -16,7 +16,6 @@ Enterprise::Enterprise()
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор без параметрів класу Enterprice - " << this << endl << endl;
 #endif 
-	_createdAt = NULL;
 	_proceeds = 0;
 }
 
@@ -30,27 +29,12 @@ Enterprise::Enterprise()
 	proceeds - прибуток корпорації
 Вихід: відсутній
 */
-Enterprise::Enterprise(vector<Department> items, Date* createdAt, string name, string chiefExecutiveOfficer, double proceeds)
+Enterprise::Enterprise(vector<Department> items, Date& createdAt, string name, string chiefExecutiveOfficer, double proceeds)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор з параметрами класу Enterprice - " << this << endl << endl;
 #endif 
-	if (&items == NULL)
-	{
-		throw(exception("Ви не передали відділи для задання!"));
-	}
-	if (createdAt == NULL)
-	{
-		throw(exception("Ви не передали дату створення!"));
-	}
-	for(auto item=items.begin(); item!=items.end(); item++)
-	{
-		_items.emplace_back(*item);
-	}
-	_createdAt = createdAt;
-	_name += name;
-	_chiefExecutiveOfficer += chiefExecutiveOfficer;
-	_proceeds = proceeds;
+	Set(items, createdAt, name, chiefExecutiveOfficer, proceeds);
 }
 
 /*
@@ -68,14 +52,7 @@ Enterprise::Enterprise(const Enterprise& other)
 	{
 		throw(exception("Ви не передали об'єкту класу для копіювання!"));
 	}
-	for (auto item = other._items.begin(); item != other._items.end(); item++)
-	{
-		_items.emplace_back(*item);
-	}
-	_createdAt = other._createdAt;
-	_name = _name + other._name;
-	_chiefExecutiveOfficer = _chiefExecutiveOfficer + other._chiefExecutiveOfficer;
-	_proceeds = other._proceeds;
+	Set(other._items, *const_cast<Date*>(&other._createdAt), other._name, other._chiefExecutiveOfficer, other._proceeds);
 }
 
 /*
@@ -103,19 +80,19 @@ vector<Department> Enterprise::GetItems()
 string Enterprise::GetCreationDate()
 {
 	string day = "";
-	if (_createdAt->GetDay() < 10)
+	if (_createdAt.GetDay() < 10)
 	{
 		day = "0";
-		day += _createdAt->GetDay();
+		day += _createdAt.GetDay();
 	}
 	else
 	{
-		day = _createdAt->GetDay();
+		day = _createdAt.GetDay();
 	}
 	string creationDate;
-	creationDate = _createdAt->GetYear();
+	creationDate = _createdAt.GetYear();
 	creationDate += ".";
-	creationDate += _createdAt->GetMonth();
+	creationDate += _createdAt.GetMonth();
 	creationDate += ".";
 	creationDate += day;
 	return creationDate;
@@ -164,24 +141,13 @@ double Enterprise::GetProceeds()
 	proceeds - прибуток корпорації
 Вихід: відсутній
 */
-void Enterprise::Set(vector<Department> items, Date* createdAt, string name, string chiefExecutiveOfficer, double proceeds)
+void Enterprise::Set(vector<Department> items, Date& createdAt, string name, string chiefExecutiveOfficer, double proceeds)
 {
-	if (&items == NULL)
-	{
-		throw(exception("Ви не передали відділи для задання!"));
-	}
-	if (createdAt == NULL)
-	{
-		throw(exception("Ви не передали дату створення!"));
-	}
-	for (auto item = items.begin(); item != items.end(); item++)
-	{
-		_items.emplace_back(*item);
-	}
-	_createdAt = createdAt;
-	_name = name;
-	_chiefExecutiveOfficer = chiefExecutiveOfficer;
-	_proceeds = proceeds;
+	SetItems(items);
+	SetCreationDate(createdAt);
+	SetName(name);
+	SetCEO(chiefExecutiveOfficer);
+	SetProceeds(proceeds);
 }
 
 /*
@@ -214,7 +180,7 @@ void Enterprise::SetCreationDate(Date& createdAt)
 	{
 		throw("Ви не передали дату створення!");
 	}
-	_createdAt = &createdAt;
+	_createdAt = createdAt;
 }
 
 /*
@@ -272,22 +238,23 @@ void Enterprise::Insert(const Department* newDepartment)
 */
 void Enterprise::Show()
 {
-	if (_createdAt->GetDay() < 10)
+	if (_createdAt.GetDay() < 10)
 	{
-		cout << "Дата створення корпорації: 0" << _createdAt->GetDay() << "." << _createdAt->GetMonth() << "." << _createdAt->GetYear() << endl;
+		cout << "Дата створення корпорації: 0" << _createdAt.GetDay() << "." << _createdAt.GetMonth() << "." << _createdAt.GetYear() << endl;
 	}
 	else
 	{
-		cout << "Дата створення корпорації: " << _createdAt->GetDay() << "." << _createdAt->GetMonth() << "." << _createdAt->GetYear() << endl;
+		cout << "Дата створення корпорації: " << _createdAt.GetDay() << "." << _createdAt.GetMonth() << "." << _createdAt.GetYear() << endl;
 	}
 	cout << "Назва корпорації: " << _name << endl;
 	cout << "CEO корпорації: " << _chiefExecutiveOfficer << endl;
-	cout << "Відділи корпорації:";
+	cout << "Відділи корпорації:" << endl;
 	int counter = 1;
 	for (auto item : _items)
 	{
 		cout << "\nВідділ №" << counter << ":" << endl;
 		item.Show();
+		counter++;
 	}
 }
 
