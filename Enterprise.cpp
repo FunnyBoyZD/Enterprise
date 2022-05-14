@@ -55,6 +55,18 @@ Enterprise::Enterprise(const Enterprise& other)
 	Set(other._items, *const_cast<Date*>(&other._createdAt), other._name, other._chiefExecutiveOfficer, other._proceeds);
 }
 
+Department* Enterprise::GetDepartment(int numOfDep)
+{
+	if (numOfDep > _items.size())
+	{
+		throw(exception("Ви передали більший номер відділу, ніж їх є у корпорації!"));
+	}
+	else
+	{
+		return &_items[numOfDep - 1];
+	}
+}
+
 /*
 Геттер для відділів корпорації
 Вхід: відсутній
