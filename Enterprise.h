@@ -7,17 +7,18 @@ class Enterprise
 {
 public: //компоненти класу, до яких наданий публічний доступ
 	Enterprise(); //конструктор без параметрів
-	Enterprise(vector<Department> items, Date* createdAt, string name, string owner, double proceeds); //конструктор з параметрами
+	Enterprise(vector<Department> items, Date& createdAt, string name, string chiefExecutiveOfficer, double proceeds); //конструктор з параметрами
 	Enterprise(const Enterprise& other); //конструктор копіювання
 	Enterprise(Enterprise&&) noexcept = delete; //заборона конструктора переміщення
 	Enterprise& operator=(Enterprise&&) = delete; //заборона переміщення за допомогою оператора присвоювання
 	Enterprise& operator=(const Enterprise&) = default; //копіювання за допомогою оператора присвоювання за замовчуванням
+	Department* GetDepartment(int numOfDep);
 	vector<Department> GetItems(); //геттер для відділів
 	string GetCreationDate(); //геттер для дати створення
 	string GetName(); //геттер для імені
 	string GetCEO(); //геттер для СЕО
 	double GetProceeds(); //геттер для прибутку
-	void Set(vector<Department> items, Date* createdAt, string name, string owner, double proceeds); //сеттер для усіх полів
+	void Set(vector<Department> items, Date& createdAt, string name, string chiefExecutiveOfficer, double proceeds); //сеттер для усіх полів
 	void SetItems(vector<Department>& items); //сеттер для відділів
 	void SetCreationDate(Date& createdAt); //сеттер для дати створення
 	void SetName(string name); //сеттер для назви
@@ -28,7 +29,7 @@ public: //компоненти класу, до яких наданий публ
 	~Enterprise(); //деструктор
 protected: //компоненти класу, до яких захищений доступ
 	vector<Department> _items; //відділи
-	Date* _createdAt; //дата створення
+	Date _createdAt; //дата створення
 	string _name; //назва
 	string _chiefExecutiveOfficer; //СЕО
 	double _proceeds; //прибуток
