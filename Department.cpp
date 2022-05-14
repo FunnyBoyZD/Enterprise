@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Department.h"
-#define DEBUG
+//#define DEBUG
 using namespace std;
 
 /*
@@ -33,19 +33,7 @@ Department::Department(vector<AdministrativeAssistant>& workersAA, vector<Busine
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор з параметрами класу Department - " << this << endl << endl;
 #endif 
-	for (auto item = _workersAA.begin(); item != _workersAA.end(); item++)
-	{
-		_workersAA.emplace_back(*item);
-	}
-	for (auto item = _workersBA.begin(); item != _workersBA.end(); item++)
-	{
-		_workersBA.emplace_back(*item);
-	}
-	for (auto item = _workersMS.begin(); item != _workersMS.end(); item++)
-	{
-		_workersMS.emplace_back(*item);
-	}
-	_name = name;
+	Set(workersAA, workersBA, workersMS, name);
 }
 
 /*
@@ -59,19 +47,7 @@ Department::Department(const Department& other)
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор копіювання класу Department - " << this << endl << endl;
 #endif
-	for (auto item = other._workersAA.begin(); item != other._workersAA.end(); item++)
-	{
-		_workersAA.emplace_back(*item);
-	}
-	for (auto item = other._workersBA.begin(); item != other._workersBA.end(); item++)
-	{
-		_workersBA.emplace_back(*item);
-	}
-	for (auto item = other._workersMS.begin(); item != other._workersMS.end(); item++)
-	{
-		_workersMS.emplace_back(*item);
-	}
-	_name = other._name;
+	Set(other._workersAA, other._workersBA, other._workersMS, other._name);
 }
 
 /*
@@ -157,19 +133,10 @@ vector<MarketingSpecialist> Department::GetWorkersMS()
 */
 void Department::Set(vector<AdministrativeAssistant> workersAA, vector<BusinessAnalyst> workersBA, vector<MarketingSpecialist> workersMS, string name)
 {
-	for (auto item = workersAA.begin(); item != workersAA.end(); item++)
-	{
-		_workersAA.emplace_back(*item);
-	}
-	for (auto item = workersBA.begin(); item != workersBA.end(); item++)
-	{
-		_workersBA.emplace_back(*item);
-	}
-	for (auto item = workersMS.begin(); item != workersMS.end(); item++)
-	{
-		_workersMS.emplace_back(*item);
-	}
-	_name = name;
+	SetWorkersAA(workersAA);
+	SetWorkersBA(workersBA);
+	SetWorkersMS(workersMS);
+	SetName(name);
 }
 
 /*
@@ -267,28 +234,27 @@ void Department::InsertAMS(const MarketingSpecialist* newWorker)
 Вихід: відсутній
 */
 void Department::Show()
-{
-#ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
+{ 
 	cout << "Назва: " << _name << endl;
 	cout << "Працівники в цьому відділі:";
 	int counter = 1;
 	for (auto worker : _workersAA)
 	{
-		cout << "Працівник №" << counter << ":";
+		cout << "\nПрацівник №" << counter << ":";
 		worker.Show();
 		counter++;
 	}
 	for (auto worker : _workersBA)
 	{
-		cout << "Працівник №" << counter << ":";
+		cout << "\nПрацівник №" << counter << ":";
 		worker.Show();
 		counter++;
 	}
 	for (auto worker : _workersMS)
 	{
-		cout << "Працівник №" << counter << ":";
+		cout << "\nПрацівник №" << counter << ":";
 		worker.Show();
 		counter++;
 	}
-#endif 
+	cout << endl << endl;
 }
