@@ -2,7 +2,7 @@
 #include "string.h" 
 #include <iostream>
 #include "Employee.h"
-#define DEBUG 
+//#define DEBUG 
 using namespace std;
 
 /*
@@ -16,8 +16,8 @@ Employee::Employee()
 	cout << "Викликався конструктор без параметрів класу Employee - " << this << endl << endl;
 #endif 
 	_name = "Невідомо";
-	_age = 0;
 	_workExperience = 0;
+	_age = 0;
 	_payment = 0;
 	_workingPlace = 0;
 }
@@ -32,29 +32,12 @@ Employee::Employee()
 	workingPlace - місце роботи робітника
 Вихід: відсутній
 */
-Employee::Employee(string name, int age, int work_experience, double payment, bool workingPlace)
+Employee::Employee(string name, int age, int workExperience, double payment, bool workingPlace)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до рядку #endif та після нього
 	cout << "Викликався конструктор з параметрами класу Employee - " << this << endl << endl;
 #endif
-	_name = name;
-	if (age < 18 || age > 65)
-		throw(exception("Ви передали некоректне значення віку робітника!"));
-	else
-		_age = age;
-	if (work_experience < 0 || work_experience > 46)
-		throw(exception("Ви передали некоректне значення стажу робітника!"));
-	else
-		_workExperience = work_experience;
-	if (payment >= 0)
-	{
-		_payment = payment;
-	}
-	else
-	{
-		throw(exception("Ви задали некоректне значення зарплатні!"));
-	}
-	_workingPlace = workingPlace;
+	Set(name, age, workExperience, payment, workingPlace);
 }
 
 /*
@@ -68,11 +51,7 @@ Employee::Employee(const Employee& other)
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
 	cout << "Викликався конструктор копіювання класу Employee - " << this << endl << endl;
 #endif 
-	_name = other._name;
-	_age = other._age;
-	_workExperience = other._workExperience;
-	_payment = other._payment;
-	_workingPlace = other._workingPlace;
+	Set(other._name, other._age, other._workExperience, other._payment, other._workingPlace);
 }
 
 /*
@@ -141,26 +120,13 @@ bool Employee::GetWorkingPlace()
 	workingPlace - місце роботи робітника
 Вихід: відсутній
 */
-void Employee::Set(string name, int age, int work_experience, double payment, bool workingPlace)
+void Employee::Set(string name, int age, int workExperience, double payment, bool workingPlace)
 {
-	_name = name;
-	if (age < 18 || age > 65)
-		throw(exception("Ви передали некоректне значення віку робітника!"));
-	else
-		_age = age;
-	if (work_experience < 0 || work_experience > 46)
-		throw(exception("Ви передали некоректне значення стажу робітника!"));
-	else
-		_workExperience = work_experience;
-	if (payment >= 0)
-	{
-		_payment = payment;
-	}
-	else
-	{
-		throw(exception("Ви задали некоректне значення зарплатні!"));
-	}
-	_workingPlace = workingPlace;
+	SetName(name);
+	SetAge(age);
+	SetExperience(workExperience);
+	SetPayment(payment);
+	SetWorkingPlace(workingPlace);
 }
 
 /*
