@@ -4,6 +4,7 @@
 #include "string.h" 
 #include "windows.h" 
 #include <iostream>
+#include <algorithm>
 #include "Enterprise.h"
 
 int main(void)
@@ -64,7 +65,7 @@ int main(void)
 		string owner = "Джен-Хсун Хуанг";
 		double proceeds = 7640000000;
 
-		Enterprise enterprise(items, createdAt,name,owner,proceeds);
+		Enterprise enterprise(items, createdAt, name, owner, proceeds);
 
 		cout << "===Корпорація до додавання нового відділу та робітників:===" << endl;
 		enterprise.Show();
@@ -107,7 +108,7 @@ int main(void)
 		vector<MarketingSpecialist> vMS4;
 		vMS4.emplace_back(MS4_1);
 		vMS4.emplace_back(MS4_2);
-		
+
 		BusinessAnalyst newBA;
 		newBA.Set("Ігор", 26, 4, 44000, false);
 		AdministrativeAssistant newAA;
@@ -120,6 +121,54 @@ int main(void)
 
 		cout << "===Корпорація після додавання нового відділу та робітників:===" << endl;
 		enterprise.Show();
+
+		cout << "Імена службовців зі стажем не менше 10 років:" << endl;
+		int numOfDep = enterprise.GetNumberOfDepartments();
+		for (int i = 1; i <= numOfDep; i++)
+		{
+			auto vAA5 = enterprise.GetDepartment(i)->GetWorkersAA();
+			vector<AdministrativeAssistant> correctAA;
+			copy_if(vAA5.begin(), vAA5.end(), back_inserter(correctAA), [](const AdministrativeAssistant& AA)
+				{
+					return const_cast<AdministrativeAssistant*>(&AA)->GetExperience() >= 10;
+				});
+			for (auto AA : correctAA)
+			{
+				cout << AA.GetName() << endl;
+			}
+
+			auto vBA5 = enterprise.GetDepartment(i)->GetWorkersBA();
+			vector<BusinessAnalyst> correctBA;
+			copy_if(vBA5.begin(), vBA5.end(), back_inserter(correctBA), [](const BusinessAnalyst& BA)
+				{
+					return const_cast<BusinessAnalyst*>(&BA)->GetExperience() >= 10;
+				});
+			for (auto BA : correctBA)
+			{
+				cout << BA.GetName() << endl;
+			}
+
+			auto vMS5 = enterprise.GetDepartment(i)->GetWorkersMS();
+			vector<MarketingSpecialist> correctMS;
+			copy_if(vMS5.begin(), vMS5.end(), back_inserter(correctMS), [](const MarketingSpecialist& MS)
+				{
+					return const_cast<MarketingSpecialist*>(&MS)->GetExperience() >= 10;
+				});
+			for (auto MS : correctMS)
+			{
+				cout << MS.GetName() << endl;
+			}
+		}
+
+		cout << endl << endl << "Імена всіх бізнес-аналітиків корпорації:" << endl;
+		for (int i = 1; i <= numOfDep; i++)
+		{
+			auto vBA6 = enterprise.GetDepartment(i)->GetWorkersBA();
+			for (auto BA : vBA6)
+			{
+				cout << BA.GetName() << endl;
+			}
+		}
 	}
 	catch (const exception& ex)
 	{
