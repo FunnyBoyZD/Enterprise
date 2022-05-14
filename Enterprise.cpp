@@ -203,9 +203,9 @@ void Enterprise::SetItems(vector<Department> items)
 */
 void Enterprise::SetCreationDate(Date& createdAt)
 {
-	if (&createdAt == NULL)
+	if (createdAt.GetYear() == "Невідомо" || createdAt.GetMonth() == "Невідомо" || createdAt.GetDay() == 0)
 	{
-		throw("Ви не передали дату створення!");
+		throw(exception("Ви не передали дати заснування!"));
 	}
 	_createdAt = createdAt;
 }
