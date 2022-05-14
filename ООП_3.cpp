@@ -121,7 +121,7 @@ int main(void)
 		cout << "===Корпорація після додавання нового відділу та робітників:===" << endl;
 		enterprise.Show();
 	}
-	catch (const std::exception& ex)
+	catch (const exception& ex)
 	{
 		cout << ex.what() << endl;
 	}
