@@ -55,6 +55,13 @@ Enterprise::Enterprise(const Enterprise& other)
 	Set(other._items, *const_cast<Date*>(&other._createdAt), other._name, other._chiefExecutiveOfficer, other._proceeds);
 }
 
+/*
+Метод для отримання адреси конкретного відділу
+Вхід:
+	numOfDep - номер відділу, адресу на який користувач бажає отримати
+Вихід:
+	GetDepartment = &_items[numOfDep - 1] - посилання на конкретний відділ
+*/
 Department* Enterprise::GetDepartment(int numOfDep)
 {
 	if (numOfDep > _items.size())
