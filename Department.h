@@ -19,7 +19,7 @@ public: //компоненти класу, до яких наданий публ
 	void InsertAnAA(const AdministrativeAssistant* newWorker); //додати нового помічника адміністратора
 	void InsertABA(const BusinessAnalyst* newWorker); //додати нового бізнес-аналітика
 	void InsertAMS(const MarketingSpecialist* newWorker); //додати нового спеціаліста з маркетингу
-	virtual void Show(); //вивід даних про відділ до консолі
+	void Show(); //вивід даних про відділ до консолі
 	~Department(); //деструктор
 protected: //компоненти класу, до яких захищений доступ
 	vector<AdministrativeAssistant> _workersAA; //помічники адміністратора
