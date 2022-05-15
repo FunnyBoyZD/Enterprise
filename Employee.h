@@ -23,7 +23,8 @@ public: //компоненти класу, до яких наданий публ
 	void SetExperience(int work_experience); //сеттер для стажу роботи
 	void SetPayment(double payment); //сеттер для зарплатні
 	void SetWorkingPlace(bool workingPlace); //сеттер для місця роботи
-	~Employee(); //деструктор за замовчуванням
+	virtual void Show() = 0;
+	virtual ~Employee(); //деструктор за замовчуванням
 protected: //компоненти класу, до яких захищений доступ
 	string _name; //ім'я робітника
 	int _age; //вік робітника
