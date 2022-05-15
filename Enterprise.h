@@ -12,7 +12,7 @@ public: //компоненти класу, до яких наданий публ
 	Enterprise(Enterprise&&) noexcept = delete; //заборона конструктора переміщення
 	Enterprise& operator=(Enterprise&&) = delete; //заборона переміщення за допомогою оператора присвоювання
 	Enterprise& operator=(const Enterprise&) = default; //копіювання за допомогою оператора присвоювання за замовчуванням
-	Department* GetDepartment(int numOfDep); //геттер адреси конкретного відділу
+	Department* GetDepartment(size_t numOfDep); //геттер адреси конкретного відділу
 	int GetNumberOfDepartments(); //геттер для отримання кількості відділів корпорації
 	vector<Department> GetItems(); //геттер для відділів
 	string GetCreationDate(); //геттер для дати створення
@@ -20,7 +20,7 @@ public: //компоненти класу, до яких наданий публ
 	string GetCEO(); //геттер для СЕО
 	double GetProceeds(); //геттер для прибутку
 	void Set(vector<Department> items, Date& createdAt, string name, string chiefExecutiveOfficer, double proceeds); //сеттер для усіх полів
-	void SetItems(vector<Department>& items); //сеттер для відділів
+	void SetItems(vector<Department> items); //сеттер для відділів
 	void SetCreationDate(Date& createdAt); //сеттер для дати створення
 	void SetName(string name); //сеттер для назви
 	void SetCEO(string chiefExecutiveOfficer); //сеттер для СЕО
