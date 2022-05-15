@@ -48,10 +48,6 @@ Enterprise::Enterprise(const Enterprise& other)
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
 	cout << "Викликався конструктор копіювання класу Enterprice - " << this << endl << endl;
 #endif
-	if (&other == NULL)
-	{
-		throw(exception("Ви не передали об'єкту класу для копіювання!"));
-	}
 	Set(other._items, *const_cast<Date*>(&other._createdAt), other._name, other._chiefExecutiveOfficer, other._proceeds);
 }
 
@@ -62,7 +58,7 @@ Enterprise::Enterprise(const Enterprise& other)
 Вихід:
 	GetDepartment = &_items[numOfDep - 1] - посилання на конкретний відділ
 */
-Department* Enterprise::GetDepartment(int numOfDep)
+Department* Enterprise::GetDepartment(size_t numOfDep)
 {
 	if (numOfDep > _items.size())
 	{
@@ -188,7 +184,7 @@ void Enterprise::Set(vector<Department> items, Date& createdAt, string name, str
 */
 void Enterprise::SetItems(vector<Department> items)
 {
-	items.at(0);
+	static_cast<void>(items.at(0));
 	for (auto item = items.begin(); item != items.end(); item++)
 	{
 		_items.emplace_back(*item);
