@@ -14,7 +14,6 @@ int main(void)
 
 	try
 	{
-		cout << "===Перша частина демонстрації роботи програми:===" << endl;
 		AdministrativeAssistant AA1_1, AA1_2, AA2_1, AA2_2;
 		MarketingSpecialist MS1_1, MS1_2, MS2_1, MS2_2;
 		BusinessAnalyst BA1_1, BA1_2, BA2_1, BA2_2;
@@ -71,9 +70,9 @@ int main(void)
 		enterprise.Show();
 
 		Department dep3;
-		AdministrativeAssistant AA3_1, AA3_2, AA4_1, AA4_2;
-		MarketingSpecialist MS3_1, MS3_2, MS4_1, MS4_2;
-		BusinessAnalyst BA3_1, BA3_2, BA4_1, BA4_2;
+		AdministrativeAssistant AA3_1, AA3_2;
+		MarketingSpecialist MS3_1, MS3_2;
+		BusinessAnalyst BA3_1, BA3_2;
 
 		AA3_1.Set("Тетяна", 30, 10, 30000, true);
 		AA3_2.Set("Ірина", 40, 15, 32000, true);
@@ -81,13 +80,6 @@ int main(void)
 		BA3_2.Set("Джесіка", 36, 18, 48000, false);
 		MS3_1.Set("Ярослава", 28, 10, 37000, true);
 		MS3_2.Set("Яворина", 25, 5, 34000, false);
-
-		AA4_1.Set("Джордж", 40, 20, 50000, true);
-		AA4_2.Set("Джек", 20, 1, 32000, true);
-		BA4_1.Set("Дмитро", 24, 3, 45000, false);
-		BA4_2.Set("Стефан", 38, 19, 65000, false);
-		MS4_1.Set("Джозеф", 19, 1, 20000, false);
-		MS4_2.Set("Зигмунд", 26, 7, 34000, true);
 
 		vector<AdministrativeAssistant> vAA3;
 		vAA3.emplace_back(AA3_1);
@@ -99,15 +91,8 @@ int main(void)
 		vMS3.emplace_back(MS3_1);
 		vMS3.emplace_back(MS3_2);
 
-		vector<AdministrativeAssistant> vAA4;
-		vAA4.emplace_back(AA4_1);
-		vAA4.emplace_back(AA4_2);
-		vector<BusinessAnalyst> vBA4;
-		vBA4.emplace_back(BA4_1);
-		vBA4.emplace_back(BA4_2);
-		vector<MarketingSpecialist> vMS4;
-		vMS4.emplace_back(MS4_1);
-		vMS4.emplace_back(MS4_2);
+		dep3.Set(vAA3, vBA3, vMS3, "Людські ресурси");
+		enterprise.Insert(&dep3);
 
 		BusinessAnalyst newBA;
 		newBA.Set("Ігор", 26, 4, 44000, false);
@@ -169,6 +154,10 @@ int main(void)
 				cout << BA.GetName() << endl;
 			}
 		}
+	}
+	catch (const out_of_range&)
+	{
+		cout << "Ви не передали колекцію для задання!" << endl;
 	}
 	catch (const exception& ex)
 	{
