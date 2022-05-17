@@ -2,6 +2,7 @@
 #include "string.h" 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Department.h"
 //#define DEBUG
 using namespace std;
@@ -14,40 +15,38 @@ using namespace std;
 Department::Department()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
-	cout << "Викликався конструктор без параметрів класу Department - " << this << endl << endl;
+    cout << "Викликався конструктор без параметрів класу Department - " << this << endl << endl;
 #endif 
-	_name = "Невідомо";
+    _name = "Невідомо";
 }
 
 /*
 Конструктор з параметрами
 Вхід:
-	workersAA - посилання на помічників адміністратора
-	workersBA - посилання на бізнес-аналітиків
-	workersMS - посилання на спеціалістів з маркетингу
-	name - назва відділу
+  workers - робітники для задання
+  name - назва відділу
 Вихід: відсутній
 */
-Department::Department(vector<AdministrativeAssistant>& workersAA, vector<BusinessAnalyst>& workersBA, vector<MarketingSpecialist>& workersMS, string name)
+Department::Department(vector<Employee*> workers, string name)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
-	cout << "Викликався конструктор з параметрами класу Department - " << this << endl << endl;
+    cout << "Викликався конструктор з параметрами класу Department - " << this << endl << endl;
 #endif 
-	Set(workersAA, workersBA, workersMS, name);
+    Set(workers, name);
 }
 
 /*
 Конструктор копіювання
 Вхід:
-	other - константне посилання на об'єкт класу Department
+  other - константне посилання на об'єкт класу Department
 Вихід: відсутній
 */
 Department::Department(const Department& other)
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
-	cout << "Викликався конструктор копіювання класу Department - " << this << endl << endl;
+    cout << "Викликався конструктор копіювання класу Department - " << this << endl << endl;
 #endif
-	Set(other._workersAA, other._workersBA, other._workersMS, other._name);
+    Set(other._workers, other._name);
 }
 
 /*
@@ -58,7 +57,7 @@ Department::Department(const Department& other)
 Department::~Department()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
-	cout << "Викликався деструктор класу Department - " << this << endl << endl;
+    cout << "Викликався деструктор класу Department - " << this << endl << endl;
 #endif 
 }
 
@@ -66,181 +65,237 @@ Department::~Department()
 Геттер для назви відділу
 Вхід: відсутній
 Вихід:
-	GetName = newName - назва відділу
+  GetName = newName - назва відділу
 */
 string Department::GetName()
 {
-	string newName = _name;
-	return newName;
+    string newName = _name;
+    return newName;
+}
+
+/*
+Геттер для всіх робітників відділу
+Вхід: відсутній
+Вихід:
+  GetWorkers = newWorkers - всі робітники відділу
+*/
+vector<Employee*> Department::GetWorkers()
+{
+    vector<Employee*> newWorkers;
+    for (auto worker : _workers)
+    {
+        newWorkers.emplace_back(worker);
+    }
+    return newWorkers;
 }
 
 /*
 Геттер для помічників адміністратора
 Вхід: відсутній
 Вихід:
-	GetWorkersAA = vAA - помічники адміністратора
+  GetWorkersAA = vAA - помічники адміністратора
 */
 vector<AdministrativeAssistant> Department::GetWorkersAA()
 {
-	vector<AdministrativeAssistant> vAA;
-	for (auto item = _workersAA.begin(); item != _workersAA.end(); item++)
-	{
-		vAA.emplace_back(*item);
-	}
-	return vAA;
+    vector<AdministrativeAssistant> vAA;
+    return GetWorkersByProf(vAA, "Помічник адміністратора");
 }
 
 /*
 Геттер для бізнес-аналітиків
 Вхід: відсутній
 Вихід:
-	GetWorkersBA = vBA - бізнес-аналітики
+  GetWorkersBA = vBA - бізнес-аналітики
 */
 vector<BusinessAnalyst> Department::GetWorkersBA()
 {
-	vector<BusinessAnalyst> vBA;
-	for (auto item = _workersBA.begin(); item != _workersBA.end(); item++)
-	{
-		vBA.emplace_back(*item);
-	}
-	return vBA;
+    vector<BusinessAnalyst> vBA;
+    return GetWorkersByProf(vBA, "Бізнес-аналітик");
 }
 
 /*
 Геттер для спеціалістів з маркетингу
 Вхід: відсутній
 Вихід:
-	GetWorkersMS = vMS - спеціалісти з маркетингу
+  GetWorkersMS = vMS - спеціалісти з маркетингу
 */
 vector<MarketingSpecialist> Department::GetWorkersMS()
 {
-	vector<MarketingSpecialist> vMS;
-	for (auto item = _workersMS.begin(); item != _workersMS.end(); item++)
-	{
-		vMS.emplace_back(*item);
-	}
-	return vMS;
+    vector<MarketingSpecialist> vMS;
+    return GetWorkersByProf(vMS, "Спеціаліст з маркетингу");
 }
 
 /*
 Сеттер для всіх полів об'єкту класу
 Вхід:
-	workersAA - помічники адміністратора
-	workersBA - бізнес-аналітики
-	workersMS - спеціалісти з маркетингу
-	name - назва відділу
+  workers - робітники для задання
+  name - назва відділу
 Вихід: відсутній
 */
-void Department::Set(vector<AdministrativeAssistant> workersAA, vector<BusinessAnalyst> workersBA, vector<MarketingSpecialist> workersMS, string name)
+void Department::Set(vector<Employee*> workers, string name)
 {
-	SetWorkersAA(workersAA);
-	SetWorkersBA(workersBA);
-	SetWorkersMS(workersMS);
-	SetName(name);
+    SetWorkers(workers);
+    SetName(name);
+}
+
+/*
+Сеттер для всіх робітників відділу
+Вхід:
+    workers - робітники для задання
+Вихід: відсутній
+*/
+void Department::SetWorkers(vector<Employee*> workers)
+{
+    static_cast<void>(workers.at(0));
+    _workers.clear();
+    for (auto worker : workers)
+    {
+        _workers.emplace_back(worker);
+    }
 }
 
 /*
 Сеттер для помічників адміністратора
 Вхід:
-	workersAA - помічники адміністратора
+    workersAA - помічники адміністратора для задання
 Вихід: відсутній
 */
-void Department::SetWorkersAA(vector<AdministrativeAssistant> workersAA)
+void Department::SetWorkersAA(vector<AdministrativeAssistant*> workersAA)
 {
-	static_cast<void>(workersAA.at(0));
-	_workersAA.clear();
-	for (auto item = workersAA.begin(); item != workersAA.end(); item++)
-	{
-		_workersAA.emplace_back(*item);
-	}
+    vector<Employee*> newWorkers;
+    for (auto worker : workersAA)
+    {
+        newWorkers.emplace_back(worker);
+    }
+    for (auto workerBA : _workers)
+    {
+        if (workerBA->GetProfession() == "Бізнес-аналітик")
+        {
+            newWorkers.emplace_back(workerBA);
+        }
+    }
+    for (auto workerMS : _workers)
+    {
+        if (workerMS->GetProfession() == "Спеціаліст з маркетингу")
+        {
+            newWorkers.emplace_back(workerMS);
+        }
+    }
+
+    _workers.clear();
+    for (auto worker : newWorkers)
+    {
+        _workers.emplace_back(worker);
+    }
 }
 
 /*
 Сеттер для бізнес-аналітиків
 Вхід:
-	workersBA - бізнес-аналітики
+    workersAA - бізнес-аналітики для задання
 Вихід: відсутній
 */
-void Department::SetWorkersBA(vector<BusinessAnalyst> workersBA)
+void Department::SetWorkersBA(vector<BusinessAnalyst*> workersBA)
 {
-	static_cast<void>(workersBA.at(0));
-	_workersBA.clear();
-	for (auto item = workersBA.begin(); item != workersBA.end(); item++)
-	{
-		_workersBA.emplace_back(*item);
-	}
+    vector<Employee*> newWorkers;
+    for (auto workerAA : _workers)
+    {
+        if (workerAA->GetProfession() == "Помічник адміністратора")
+        {
+            newWorkers.emplace_back(workerAA);
+        }
+    }
+    for (auto worker : workersBA)
+    {
+        newWorkers.emplace_back(worker);
+    }
+    for (auto workerMS : _workers)
+    {
+        if (workerMS->GetProfession() == "Спеціаліст з маркетингу")
+        {
+            newWorkers.emplace_back(workerMS);
+        }
+    }
+
+    _workers.clear();
+    for (auto worker : newWorkers)
+    {
+        _workers.emplace_back(worker);
+    }
 }
 
 /*
 Сеттер для спеціалістів з маркетингу
 Вхід:
-	workersMS - спеціалісти з маркетингу
+    workersAA - спеціалісти з маркетингу для задання
 Вихід: відсутній
 */
-void Department::SetWorkersMS(vector<MarketingSpecialist> workersMS)
+void Department::SetWorkersMS(vector<MarketingSpecialist*> workersMS)
 {
-	static_cast<void>(workersMS.at(0));
-	_workersMS.clear();
-	for (auto item = workersMS.begin(); item != workersMS.end(); item++)
-	{
-		_workersMS.emplace_back(*item);
-	}
+    vector<Employee*> newWorkers;
+    for (auto workerAA : _workers)
+    {
+        if (workerAA->GetProfession() == "Помічник адміністратора")
+        {
+            newWorkers.emplace_back(workerAA);
+        }
+    }
+    for (auto workerBA : _workers)
+    {
+        if (workerBA->GetProfession() == "Бізнес-аналітик")
+        {
+            newWorkers.emplace_back(workerBA);
+        }
+    }
+    for (auto worker : workersMS)
+    {
+        newWorkers.emplace_back(worker);
+    }
+
+    _workers.clear();
+    for (auto worker : newWorkers)
+    {
+        _workers.emplace_back(worker);
+    }
 }
 
 /*
 Сеттер для назви відділу
 Вхід:
-	name - назва відділу
+  name - назва відділу
 Вихід: відсутній
 */
 void Department::SetName(string name)
 {
-	_name = name;
+    _name = name;
 }
 
 /*
-Метод додавання нового помічника адміністратора
+Метод додавання нового робітника у відділ
 Вхід:
-	newWorker - новий помічник адміністратора
+    newWorker - новий робітник, передача за посиланням
+    profession - посада нового робітника
 Вихід: відсутній
 */
-void Department::InsertAnAA(const AdministrativeAssistant* newWorker)
+void Department::Insert(Employee* newWorker, string profession)
 {
-	if (newWorker == NULL)
-	{
-		throw(exception("Ви не передали нового робітника!"));
-	}
-	_workersAA.push_back(*newWorker);
-}
-
-/*
-Метод додавання нового бізнес-аналітика
-Вхід:
-	newWorker - новий бізнес-аналітик
-Вихід: відсутній
-*/
-void Department::InsertABA(const BusinessAnalyst* newWorker)
-{
-	if (newWorker == NULL)
-	{
-		throw(exception("Ви не передали нового робітника!"));
-	}
-	_workersBA.push_back(*newWorker);
-}
-
-/*
-Метод додавання нового спеціалісту з маркетингу
-Вхід:
-	newWorker - новий спеціаліст з маркетингу
-Вихід: відсутній
-*/
-void Department::InsertAMS(const MarketingSpecialist* newWorker)
-{
-	if (newWorker == NULL)
-	{
-		throw(exception("Ви не передали нового робітника!"));
-	}
-	_workersMS.push_back(*newWorker);
+    if (newWorker == NULL)
+    {
+        throw(exception("Ви не передали нового робітника!"));
+    }
+    auto iterator = _workers.begin();
+    int iCurrent = 0,
+        iPrevious = 0;
+    for (auto worker : _workers)
+    {
+        if (worker->GetProfession() == profession)
+        {
+            advance(iterator, iCurrent - iPrevious);
+            iPrevious = iCurrent;
+        }
+        iCurrent++;
+    }
+    _workers.insert(iterator, newWorker);
 }
 
 /*
@@ -249,27 +304,39 @@ void Department::InsertAMS(const MarketingSpecialist* newWorker)
 Вихід: відсутній
 */
 void Department::Show()
-{ 
-	cout << "Назва: " << _name << endl;
-	cout << "Працівники в цьому відділі:";
-	int counter = 1;
-	for (auto worker : _workersAA)
-	{
-		cout << "\nПрацівник №" << counter << ":";
-		worker.Show();
-		counter++;
-	}
-	for (auto worker : _workersBA)
-	{
-		cout << "\nПрацівник №" << counter << ":";
-		worker.Show();
-		counter++;
-	}
-	for (auto worker : _workersMS)
-	{
-		cout << "\nПрацівник №" << counter << ":";
-		worker.Show();
-		counter++;
-	}
-	cout << endl << endl;
+{
+    cout << "Назва: " << _name << endl;
+    cout << "Працівники в цьому відділі:";
+    int counter = 1;
+    for (auto worker : _workers)
+    {
+        cout << "\nПрацівник №" << counter << ":";
+        worker->Show();
+        counter++;
+    }
+    cout << endl << endl;
+}
+
+template <typename T>
+/*
+Геттер для робітників за їхньою професією
+Вхід:
+    vector - контейнер для робітників із заданою професією, передача за посиланням
+    profession - професія робітників
+Вихід:
+    GetWorkersByProf = vector - контейнер із робітниками з заданою професією
+*/
+vector<T> Department::GetWorkersByProf(vector<T>& vector, string profession)
+{
+    int j = 0;
+    for (auto i = _workers.begin(); i != _workers.end(); i++, j++)
+    {
+        if (_workers.at(j)->GetProfession() == profession)
+        {
+            T AA;
+            AA.Set(_workers.at(j)->GetName(), _workers.at(j)->GetProfession(), _workers.at(j)->GetAge(), _workers.at(j)->GetExperience(), _workers.at(j)->GetPayment(), _workers.at(j)->GetWorkingPlace());
+            vector.emplace_back(AA);
+        }
+    }
+    return vector;
 }
