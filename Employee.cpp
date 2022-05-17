@@ -1,234 +1,37 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include "string.h" 
+#pragma once
 #include <iostream>
-#include "Employee.h"
-//#define DEBUG 
+#include <vector>
 using namespace std;
 
-/*
-Конструктор без параметрів
-Вхід: відсутній
-Вихід: відсутній
-*/
-Employee::Employee()
+class Employee
 {
-#ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif та після нього 
-    cout << "Викликався конструктор без параметрів класу Employee - " << this << endl << endl;
-#endif 
-    _name = "Невідомо";
-    _workExperience = 0;
-    _age = 0;
-    _payment = 0;
-    _workingPlace = 0;
-}
-
-/*
-Конструктор з параметрами
-Вхід:
-  name - ім'я робітника
-  age - вік робітника
-  work_experience - стаж робітника
-  payment - зарплатня робітника
-  workingPlace - місце роботи робітника
-Вихід: відсутній
-*/
-Employee::Employee(string name, string profession, int age, int workExperience, double payment, bool workingPlace)
-{
-#ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до рядку #endif та після нього
-    cout << "Викликався конструктор з параметрами класу Employee - " << this << endl << endl;
-#endif
-    Set(name, profession, age, workExperience, payment, workingPlace);
-}
-
-/*
-Конструктор копіювання
-Вхід:
-  other - константне посилання на об'єкт класу Employee
-Вихід: відсутній
-*/
-Employee::Employee(const Employee& other)
-{
-#ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до #endif і далі 
-    cout << "Викликався конструктор копіювання класу Employee - " << this << endl << endl;
-#endif 
-    Set(other._name, other._profession, other._age, other._workExperience, other._payment, other._workingPlace);
-}
-
-/*
-Геттер для імені робітника
-Вхід: відсутній
-Вихід:
-  GetName = newName - ім'я робітника
-*/
-string Employee::GetName()
-{
-    string newName = _name;
-    return newName;
-}
-
-/*
-Геттер для професії
-Вхід: відсутній
-Вихід:
-    GetProfession = newProfession - професія робітника
-*/
-string Employee::GetProfession()
-{
-    string newProfession = _profession;
-    return newProfession;
-}
-
-/*
-Геттер для віку робітника
-Вхід: відсутній
-Вихід:
-  GetAge = _age - вік робітника
-*/
-int Employee::GetAge()
-{
-    return _age;
-}
-
-/*
-Геттер для стажу робітника
-Вхід: відсутній
-Вихід:
-  GetExperience = _workExperience - стаж робітника
-*/
-int Employee::GetExperience()
-{
-    return _workExperience;
-}
-
-/*
-Геттер для зарплатні робітника
-Вхід: відсутній
-Вихід:
-  GetPayment = _payment - зарплатня робітника
-*/
-double Employee::GetPayment()
-{
-    return _payment;
-}
-
-/*
-Геттер для місця роботи робітника
-Вхід: відсутній
-Вихід:
-  GetWorkingPlace = _workingPlace - місце роботи робітника
-*/
-bool Employee::GetWorkingPlace()
-{
-    return _workingPlace;
-}
-
-/*
-Сеттер для всіх полів об'єкту класу
-Вхід:
-  name - ім'я робітника
-  age - вік робітника
-  work_experience - стаж робітника
-  payment - зарплатня робітника
-  workingPlace - місце роботи робітника
-Вихід: відсутній
-*/
-void Employee::Set(string name, string profession, int age, int workExperience, double payment, bool workingPlace)
-{
-    SetName(name);
-    SetProfession(profession);
-    SetAge(age);
-    SetExperience(workExperience);
-    SetPayment(payment);
-    SetWorkingPlace(workingPlace);
-}
-
-/*
-Сеттер для імені робітника
-Вхід:
-  name - ім'я робітника
-Вихід: відсутній
-*/
-void Employee::SetName(string name)
-{
-    _name = name;
-}
-
-/*
-Сеттер для професії
-Вхід:
-    profession - професія для задання
-Вихід: відсутній
-*/
-void Employee::SetProfession(string profession)
-{
-    _profession = profession;
-}
-
-/*
-Сеттер для віку робітника
-Вхід:
-  age - вік робітника
-Вихід: відсутній
-*/
-void Employee::SetAge(int age)
-{
-    if (age < 18 || age > 65)
-        throw(exception("Ви передали некоректне значення віку робітника!"));
-    else
-        _age = age;
-}
-
-/*
-Сеттер для стажу робітника
-Вхід:
-  work_experience - стаж робітника
-Вихід: відсутній
-*/
-void Employee::SetExperience(int work_experience)
-{
-    if (work_experience < 0 || work_experience > 46)
-        throw(exception("Ви передали некоректне значення стажу робітника!"));
-    else
-        _workExperience = work_experience;
-}
-
-/*
-Сеттер для зарплатні робітника
-Вхід:
-  payment - зарплатня робітника
-Вихід: відсутній
-*/
-void Employee::SetPayment(double payment)
-{
-    if (payment >= 0)
-    {
-        _payment = payment;
-    }
-    else
-    {
-        throw(exception("Ви задали некоректне значення зарплатні!"));
-    }
-}
-
-/*
-Сеттер для місця роботи робітника
-Вхід:
-  workingPlace - місце роботи робітника
-Вихід: відсутній
-*/
-void Employee::SetWorkingPlace(bool workingPlace)
-{
-    _workingPlace = workingPlace;
-}
-
-/*
-Деструктор класу
-Вхід: відсутній
-Вихід: відсутній
-*/
-Employee::~Employee()
-{
-#ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
-    cout << "Викликався деструктор класу Employee - " << this << endl << endl;
-#endif 
-}
+public: //компоненти класу, до яких наданий публічний доступ  
+	Employee(); //конструктор без параметрів
+	Employee(string name, string profession, int age, int work_experience, double payment, bool workingPlace); //конструктор з параметрами
+	Employee(const Employee& other); //конструктор копіювання
+	Employee(Employee&&) noexcept = default;
+	Employee& operator=(Employee&&) = default;
+	Employee& operator=(const Employee&) = default; //копіювання за допомогою оператора присвоювання за замовчуванням
+	string GetName(); //геттер для імені без зазначеної кількості елементів для запису
+	string GetProfession(); //геттер для професії
+	int GetAge(); //геттер для віку
+	int GetExperience(); //геттер для стажу роботи
+	double GetPayment(); //геттер для зарплатні
+	bool GetWorkingPlace(); //геттер для місця роботи
+	void Set(string name, string profession, int age, int work_experience, double payment, bool workingPlace); //сеттер для всіх полів
+	void SetName(string name); //геттер для імені
+	void SetProfession(string profession); //сеттер для професії
+	void SetAge(int age); //геттер для віку
+	void SetExperience(int work_experience); //сеттер для стажу роботи
+	void SetPayment(double payment); //сеттер для зарплатні
+	void SetWorkingPlace(bool workingPlace); //сеттер для місця роботи
+	virtual void Show() = 0;
+	virtual ~Employee(); //деструктор за замовчуванням
+protected: //компоненти класу, до яких захищений доступ
+	string _name; //ім'я робітника
+	string _profession; //професія
+	int _age; //вік робітника
+	int _workExperience; //стаж роботи робітника
+	double _payment; //зарплатня
+	bool _workingPlace; //місце роботи(вдома чи в офісі)
+};
