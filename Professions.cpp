@@ -32,7 +32,7 @@ void AdministrativeAssistant::Show()
 AdministrativeAssistant::~AdministrativeAssistant()
 {
 #ifdef DEBUG //якщо ми ідентифікували DEBUG, то виконується все до та після #endif 
-		cout << "Викликався деструктор класу AdministrativeAssistant - " << this << endl << endl;
+	cout << "Викликався деструктор класу AdministrativeAssistant - " << this << endl << endl;
 #endif 
 }
 
