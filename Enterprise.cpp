@@ -185,6 +185,7 @@ void Enterprise::Set(vector<Department> items, Date& createdAt, string name, str
 void Enterprise::SetItems(vector<Department> items)
 {
 	static_cast<void>(items.at(0));
+	_items.clear();
 	for (auto item = items.begin(); item != items.end(); item++)
 	{
 		_items.emplace_back(*item);
