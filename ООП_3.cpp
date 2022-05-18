@@ -65,6 +65,7 @@ int main(void)
         double proceeds = 7640000000;
 
         Enterprise enterprise(items, createdAt, name, owner, proceeds);
+        enterprise.Set(items, createdAt, name, owner, proceeds);
 
         cout << "===Корпорація до додавання нового відділу та робітників:===" << endl;
         enterprise.Show();
@@ -105,6 +106,18 @@ int main(void)
 
         cout << "===Корпорація після додавання нового відділу та робітників:===" << endl;
         enterprise.Show();
+
+        AdministrativeAssistant AA4_1, AA4_2, AA4_3;
+
+        AA4_1.Set("Вероніка", "Помічник адміністратора", 32, 9, 30000, true);
+        AA4_2.Set("Григорій", "Помічник адміністратора", 25, 7, 32000, true);
+        AA4_3.Set("Яворина", "Бізнес-аналітик", 24, 2, 31000, false);
+
+        vector<AdministrativeAssistant*> vWorkers4;
+        vWorkers4.emplace_back(&AA4_1);
+        vWorkers4.emplace_back(&AA4_2);
+        vWorkers4.emplace_back(&AA4_3);
+        enterprise.GetDepartment(2)->SetWorkersAA(vWorkers4);
 
         cout << "Імена службовців зі стажем не менше 10 років:" << endl;
         int numOfDep = enterprise.GetNumberOfDepartments();
