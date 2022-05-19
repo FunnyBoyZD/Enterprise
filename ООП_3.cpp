@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "Enterprise.h"
 
-void SortWorkers(vector<Employee*>& workers);
+//void SortWorkers(vector<Employee*>& workers);
 
 int main(void)
 {
@@ -41,7 +41,7 @@ int main(void)
         vWorkers1.emplace_back(&BA1_2);
         vWorkers1.emplace_back(&AA1_2);
         vWorkers1.emplace_back(&MS1_2);
-        SortWorkers(vWorkers1);
+        //SortWorkers(vWorkers1);
 
         vector<Employee*> vWorkers2;
         vWorkers2.emplace_back(&MS2_2);
@@ -50,7 +50,7 @@ int main(void)
         vWorkers2.emplace_back(&MS2_1);
         vWorkers2.emplace_back(&AA2_1);
         vWorkers2.emplace_back(&BA2_2);
-        SortWorkers(vWorkers2);
+        //SortWorkers(vWorkers2);
 
         Department dep1, dep2;
         vector<Department> items;
@@ -89,7 +89,7 @@ int main(void)
         vWorkers3.emplace_back(&AA3_2);
         vWorkers3.emplace_back(&BA3_2);
         vWorkers3.emplace_back(&MS3_2);
-        SortWorkers(vWorkers3);
+      /*  SortWorkers(vWorkers3);*/
 
         dep3.Set(vWorkers3, "Людські ресурси");
         enterprise.Insert(&dep3);
@@ -178,41 +178,41 @@ int main(void)
     return 0;
 }
 
-/*
-Функція сортування співробітників за професіями
-Вхід:
-    workers - робітники для сортування, передача за посиланням
-Вихід: відсутній
-*/
-void SortWorkers(vector<Employee*>& workers)
-{
-    static_cast<void>(workers.at(0));
-    vector<Employee*> workersAA;
-    copy_if(workers.begin(), workers.end(), back_inserter(workersAA), [](Employee*& workerAA)
-        {
-            return workerAA->GetProfession() == "Помічник адміністратора";
-        });
-    vector<Employee*> workersBA;
-    copy_if(workers.begin(), workers.end(), back_inserter(workersBA), [](Employee*& workerBA)
-        {
-            return workerBA->GetProfession() == "Бізнес-аналітик";
-        });
-    vector<Employee*> workersMS;
-    copy_if(workers.begin(), workers.end(), back_inserter(workersMS), [](Employee*& workerMS)
-        {
-            return workerMS->GetProfession() == "Спеціаліст з маркетингу";
-        });
-    workers.clear();
-    for (auto item : workersAA)
-    {
-        workers.emplace_back(item);
-    }
-    for (auto item : workersBA)
-    {
-        workers.emplace_back(item);
-    }
-    for (auto item : workersMS)
-    {
-        workers.emplace_back(item);
-    }
-}
+///*
+//Функція сортування співробітників за професіями
+//Вхід:
+//    workers - робітники для сортування, передача за посиланням
+//Вихід: відсутній
+//*/
+//void SortWorkers(vector<Employee*>& workers)
+//{
+//    static_cast<void>(workers.at(0));
+//    vector<Employee*> workersAA;
+//    copy_if(workers.begin(), workers.end(), back_inserter(workersAA), [](Employee*& workerAA)
+//        {
+//            return workerAA->GetProfession() == "Помічник адміністратора";
+//        });
+//    vector<Employee*> workersBA;
+//    copy_if(workers.begin(), workers.end(), back_inserter(workersBA), [](Employee*& workerBA)
+//        {
+//            return workerBA->GetProfession() == "Бізнес-аналітик";
+//        });
+//    vector<Employee*> workersMS;
+//    copy_if(workers.begin(), workers.end(), back_inserter(workersMS), [](Employee*& workerMS)
+//        {
+//            return workerMS->GetProfession() == "Спеціаліст з маркетингу";
+//        });
+//    workers.clear();
+//    for (auto item : workersAA)
+//    {
+//        workers.emplace_back(item);
+//    }
+//    for (auto item : workersBA)
+//    {
+//        workers.emplace_back(item);
+//    }
+//    for (auto item : workersMS)
+//    {
+//        workers.emplace_back(item);
+//    }
+//}
