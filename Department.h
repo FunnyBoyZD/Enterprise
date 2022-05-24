@@ -14,9 +14,8 @@ public: //компоненти класу, до яких наданий публ
 	vector<MarketingSpecialist> GetWorkersMS(); //геттер для спеціалістів з маркетингу
 	void Set(vector<Employee*> workers, string name); //сеттер для всіх полів
 	void SetWorkers(vector<Employee*> workers); //сеттер для всіх робітників відділу
-	void SetWorkersAA(vector<AdministrativeAssistant*> workersAA); //сеттер для помічників адміністратора
-	void SetWorkersBA(vector<BusinessAnalyst*> workersBA); //сеттер для бізнес-аналітиків
-	void SetWorkersMS(vector<MarketingSpecialist*> workersMS); //сеттер для спеціалістів з маркетингу
+	template <typename T>
+	void SetWorkersByProf(vector<T>& workers);
 	void SetName(string name); //сеттер для назви
 	void Insert(Employee* newWorker, string profession); //додати нового робітника у відділ
 	void Show(); //вивід даних про відділ до консолі
@@ -27,5 +26,4 @@ protected: //компоненти класу, до яких захищений �
 
 	template <typename T>
 	vector<T> GetWorkersByProf(vector<T>& vector, string profession); //геттер для робітників за їхньою професією
-	
 };
