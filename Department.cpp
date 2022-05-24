@@ -155,105 +155,20 @@ void Department::SetWorkers(vector<Employee*> workers)
 }
 
 /*
-Сеттер для помічників адміністратора
+Сеттер для робітників певної професії
 Вхід:
-    workersAA - помічники адміністратора для задання
+    workers - робітники для задання
 Вихід: відсутній
 */
-void Department::SetWorkersAA(vector<AdministrativeAssistant*> workersAA)
+template <typename T>
+void Department::SetWorkersByProf(vector<T>& workers)
 {
-    vector<Employee*> newWorkers;
-    for (auto worker : workersAA)
-    {
-        newWorkers.emplace_back(worker);
-    }
-    for (auto workerBA : _workers)
-    {
-        if (workerBA->GetProfession() == "Бізнес-аналітик")
+    auto toDelete = remove_if(_workers.begin(), _workers.end(), [workers](T& worker)
         {
-            newWorkers.emplace_back(workerBA);
-        }
-    }
-    for (auto workerMS : _workers)
-    {
-        if (workerMS->GetProfession() == "Спеціаліст з маркетингу")
-        {
-            newWorkers.emplace_back(workerMS);
-        }
-    }
-
-    _workers.clear();
-    for (auto worker : newWorkers)
-    {
-        _workers.emplace_back(worker);
-    }
-}
-
-/*
-Сеттер для бізнес-аналітиків
-Вхід:
-    workersAA - бізнес-аналітики для задання
-Вихід: відсутній
-*/
-void Department::SetWorkersBA(vector<BusinessAnalyst*> workersBA)
-{
-    vector<Employee*> newWorkers;
-    for (auto workerAA : _workers)
-    {
-        if (workerAA->GetProfession() == "Помічник адміністратора")
-        {
-            newWorkers.emplace_back(workerAA);
-        }
-    }
-    for (auto worker : workersBA)
-    {
-        newWorkers.emplace_back(worker);
-    }
-    for (auto workerMS : _workers)
-    {
-        if (workerMS->GetProfession() == "Спеціаліст з маркетингу")
-        {
-            newWorkers.emplace_back(workerMS);
-        }
-    }
-
-    _workers.clear();
-    for (auto worker : newWorkers)
-    {
-        _workers.emplace_back(worker);
-    }
-}
-
-/*
-Сеттер для спеціалістів з маркетингу
-Вхід:
-    workersAA - спеціалісти з маркетингу для задання
-Вихід: відсутній
-*/
-void Department::SetWorkersMS(vector<MarketingSpecialist*> workersMS)
-{
-    vector<Employee*> newWorkers;
-    for (auto workerAA : _workers)
-    {
-        if (workerAA->GetProfession() == "Помічник адміністратора")
-        {
-            newWorkers.emplace_back(workerAA);
-        }
-    }
-    for (auto workerBA : _workers)
-    {
-        if (workerBA->GetProfession() == "Бізнес-аналітик")
-        {
-            newWorkers.emplace_back(workerBA);
-        }
-    }
-    for (auto worker : workersMS)
-    {
-        newWorkers.emplace_back(worker);
-    }
-
-    _workers.clear();
-    for (auto worker : newWorkers)
+            return worker->GetProfession() /*== workers[0]->GetProfession()*/;
+        });
+    _workers.erase(toDelete, _workers.end());
+    for (auto worker : workers)
     {
         _workers.emplace_back(worker);
     }
