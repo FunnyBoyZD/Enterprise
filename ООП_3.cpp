@@ -117,7 +117,7 @@ int main(void)
         vWorkers4.emplace_back(&AA4_1);
         vWorkers4.emplace_back(&AA4_2);
         vWorkers4.emplace_back(&AA4_3);
-        enterprise.GetDepartment(2)->SetWorkersAA(vWorkers4);
+        enterprise.GetDepartment(2)->SetWorkersByProf(vWorkers4);
 
         cout << "Імена службовців зі стажем не менше 10 років:" << endl;
         int numOfDep = enterprise.GetNumberOfDepartments();
