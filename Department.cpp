@@ -165,7 +165,7 @@ void Department::SetWorkersByProf(vector<T>& workers)
 {
     auto toDelete = remove_if(_workers.begin(), _workers.end(), [workers](T& worker)
         {
-            return worker->GetProfession() /*== workers[0]->GetProfession()*/;
+            return worker->GetProfession() == workers[0]->GetProfession();
         });
     _workers.erase(toDelete, _workers.end());
     for (auto worker : workers)
