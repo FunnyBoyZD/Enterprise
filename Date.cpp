@@ -56,8 +56,7 @@ Date::Date(const Date& other)
 */
 string Date::GetYear()
 {
-	string newYear = _year;
-	return newYear;
+	return _year;
 }
 
 /*
@@ -68,8 +67,7 @@ string Date::GetYear()
 */
 string Date::GetMonth()
 {
-	string newMonth = _month;
-	return newMonth;
+	return _month;
 }
 
 /*
