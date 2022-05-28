@@ -69,8 +69,7 @@ Department::~Department()
 */
 string Department::GetName()
 {
-    string newName = _name;
-    return newName;
+    return _name;
 }
 
 /*
@@ -163,7 +162,7 @@ void Department::SetWorkers(vector<Employee*> workers)
 template <typename T>
 void Department::SetWorkersByProf(vector<T>& workers)
 {
-    auto toDelete = remove_if(_workers.begin(), _workers.end(), [workers](T& worker)
+    auto toDelete = remove_if(_workers.begin(), _workers.end(), [workers](const Employee* worker)
         {
             return worker->GetProfession() == workers[0]->GetProfession();
         });
@@ -173,6 +172,13 @@ void Department::SetWorkersByProf(vector<T>& workers)
         _workers.emplace_back(worker);
     }
 }
+
+template 
+void Department::SetWorkersByProf(vector<AdministrativeAssistant*>& workers);
+template 
+void Department::SetWorkersByProf(vector<BusinessAnalyst*>& workers);
+template 
+void Department::SetWorkersByProf(vector<MarketingSpecialist*>& workers);
 
 /*
 Сеттер для назви відділу
